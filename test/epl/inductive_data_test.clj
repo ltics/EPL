@@ -6,4 +6,6 @@
 (deftest inductive-data
   (testing "in-S?"
     (is (true? (in-S? 3)))
-    (is (false? (in-S? 4)))))
+    (is (false? (in-S? 4))))
+  (testing "list-length"
+    (is= (list-length '(1 2 3)) 3)))
