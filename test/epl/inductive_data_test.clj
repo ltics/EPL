@@ -5,4 +5,5 @@
 
 (deftest inductive-data
   (testing "in-S?"
-    (is (true? (in-S? 3)))))
+    (is (true? (in-S? 3)))
+    (is (true? (in-S? 4)))))
