@@ -14,4 +14,6 @@
                (empty? x)
                (nil? x))))
 
-(def lambda fn)
+(defmacro lambda
+  [& sigs]
+  `(fn ~@sigs))

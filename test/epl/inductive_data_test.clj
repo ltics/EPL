@@ -1,7 +1,8 @@
 (ns epl.inductive_data_test
   (:require [clojure.test :refer :all]
-            [epl.core :refer :all]))
+            [epl.test_cota :refer :all]
+            [epl.inductive-data :refer :all]))
 
-(deftest
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest inductive-data
+  (testing "in-S?"
+    (is (true? (in-S? 3)))))
