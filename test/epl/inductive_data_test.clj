@@ -8,4 +8,7 @@
     (is (true? (in-S? 3)))
     (is (false? (in-S? 4))))
   (testing "list-length"
-    (is= (list-length '(1 2 3)) 3)))
+    (is= (list-length '(1 2 3)) 3))
+  (testing "nth-element"
+    (is= (nth-element '(1 2 3) 0))
+    (is (nil? (nth-element '(1 2 3) 3)))))
