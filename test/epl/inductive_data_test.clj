@@ -11,4 +11,9 @@
     (is= (list-length '(1 2 3)) 3))
   (testing "nth-element"
     (is= (nth-element '(1 2 3) 0))
-    (is (nil? (nth-element '(1 2 3) 3)))))
+    (is (nil? (nth-element '(1 2 3) 3))))
+  (testing "remove-first"
+    (is= (remove-first 'a '(a b c)) '(b c))
+    (is= (remove-first 'b '(e f g)) '(e f g))
+    (is= (remove-first 'a4 '(c1 a4 c1 a4)) '(c1 c1 a4))
+    (is= (remove-first 'x '()) '())))

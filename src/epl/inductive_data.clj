@@ -32,3 +32,12 @@
       (if (zero? n)
         (car lst)
         (nth-element (cdr lst) (- n 1))))))
+
+;; remove-first : Sym * Listof(Sym) -> Listof(Sym)
+(def remove-first
+  (lambda [s los]
+    (if (null? los)
+      '()
+      (if (= (car los) s)
+        (cdr los)
+        (cons (car los) (remove-first s (cdr los)))))))
