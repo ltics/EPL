@@ -23,4 +23,6 @@
     (is (false? (occurs-free? 'x '(lambda (x) (x y)))))
     (is (true? (occurs-free? 'x '(lambda (y) (x y)))))
     (is (true? (occurs-free? 'x '((lambda (x) x) (x y)))))
-    (is (true? (occurs-free? 'x '(lambda (y) (lambda (z) (x (y z)))))))))
+    (is (true? (occurs-free? 'x '(lambda (y) (lambda (z) (x (y z))))))))
+  (testing "subst"
+    (is= (subst 'a 'b '((b c) (b () d))) '((a c) (a () d)))))
