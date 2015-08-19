@@ -80,3 +80,18 @@
     (if (symbol? sexp)
       (if (= sexp old) new sexp)
       (subst new old sexp))))
+
+;; number-elements-from : Listof(SchemeVal) * Int -> Listof(List(Int,SchemeVal))
+;; usage: (number-elements-from '(v0 v1 v2  ...) n) = ((n v0 ) (n+1 v1) (n+2 v2) ...)
+(def number-elements-from
+  (lambda [lst n]
+    (if (null? lst)
+      '()
+      (cons
+        (list n (car lst))
+        (number-elements-from (cdr lst) (+ n 1))))))
+
+;; number-elements : List -> Listof(List(Int,SchemeVal))
+(def number-elements
+  (lambda [lst]
+    (number-elements-from lst 0)))

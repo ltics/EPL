@@ -25,4 +25,8 @@
     (is (true? (occurs-free? 'x '((lambda (x) x) (x y)))))
     (is (true? (occurs-free? 'x '(lambda (y) (lambda (z) (x (y z))))))))
   (testing "subst"
-    (is= (subst 'a 'b '((b c) (b () d))) '((a c) (a () d)))))
+    (is= (subst 'a 'b '((b c) (b () d))) '((a c) (a () d))))
+  (testing "number-elements-from"
+    (is= (number-elements-from '(a b c d e) 0) '((0 a) (1 b) (2 c) (3 d) (4 e))))
+  (testing "number-elements"
+    (is= (number-elements '(a b c d e)) '((0 a) (1 b) (2 c) (3 d) (4 e)))))
