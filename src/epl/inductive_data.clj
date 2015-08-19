@@ -41,3 +41,22 @@
       (if (= (car los) s)
         (cdr los)
         (cons (car los) (remove-first s (cdr los)))))))
+
+;; free variable
+;; x occurs free in x
+;; x occurs free in lambda (y) E if x is not y and x occurs free in E
+;; x occurs free in (E F) if x occurs free in E or x occurs free in F
+
+;; occurs-free? : Sym * Lcexp -> Bool
+;; usage:
+;;   returns #t if the symbol var occurs free in exp,
+;;   otherwise returns #f.
+(def occurs-free?
+  (lambda [var exp]
+    (cond (symbol? exp) (= var exp)
+          (= (car exp) 'lambda) (and
+                                  (not (= var (car (cadr exp))))
+                                  (occurs-free? var (caddr exp)))
+          :else (or
+                  (occurs-free? var (car exp))
+                  (occurs-free? var (cadr exp))))))
