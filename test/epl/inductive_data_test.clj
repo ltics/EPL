@@ -29,4 +29,6 @@
   (testing "number-elements-from"
     (is= (number-elements-from '(a b c d e) 0) '((0 a) (1 b) (2 c) (3 d) (4 e))))
   (testing "number-elements"
-    (is= (number-elements '(a b c d e)) '((0 a) (1 b) (2 c) (3 d) (4 e)))))
+    (is= (number-elements '(a b c d e)) '((0 a) (1 b) (2 c) (3 d) (4 e))))
+  (testing "list-sum"
+    (is= (list-sum (list 1 2 3 4 5)) 15)))

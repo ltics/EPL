@@ -95,3 +95,11 @@
 (def number-elements
   (lambda [lst]
     (number-elements-from lst 0)))
+
+;; list-sum : Listof(Int) -> Int
+(def list-sum
+  (lambda [loi]
+    (if (null? loi)
+      0
+      (+ (car loi)
+         (list-sum (cdr loi))))))
