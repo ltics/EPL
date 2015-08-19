@@ -17,3 +17,6 @@
 (defmacro lambda
   [& sigs]
   `(fn ~@sigs))
+
+(def vector-ref nth)
+(def vector-length count)

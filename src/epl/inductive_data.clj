@@ -103,3 +103,20 @@
       0
       (+ (car loi)
          (list-sum (cdr loi))))))
+
+;; partial-vector-sum : Vectorof(Int) * Int -> Int
+;; usage if 0 <= n < length(v), then
+;;            (partial-vector-sum v n) = SUM(v_i from 0 <= i <= n)
+(def partial-vector-sum
+  (lambda [v n]
+    (if (zero? n)
+      (vector-ref v 0)
+      (+ (vector-ref v n)
+         (partial-vector-sum v (- n 1))))))
+
+(def vector-sum
+  (lambda [v]
+    (let [n (vector-length v)]
+      (if (zero? n)
+        0
+        (partial-vector-sum v (- n 1))))))
