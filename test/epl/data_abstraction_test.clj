@@ -2,7 +2,8 @@
   (:require [clojure.test :refer :all]
             [epl.test_cota :refer :all]
             [epl.data-abstraction.numeral-abstraction :refer :all]
-            [epl.data-abstraction.env-abstraction.datastructure :as eds]))
+            [epl.data-abstraction.env-abstraction.datastructure :as eds]
+            [epl.data-abstraction.env-abstraction.procedural :as eproc]))
 
 (deftest numeral-abstraction
   (testing "unary number"
@@ -31,4 +32,13 @@
                       (eds/empty-env)))))]
       (is= (eds/apply-env env 'd) 6)
       (is= (eds/apply-env env 'y) 8)
-      (is= (eds/apply-env env 'x) 7))))
+      (is= (eds/apply-env env 'x) 7)))
+  (testing "procedural"
+    (let [env (eproc/extend-env 'd 6
+                (eproc/extend-env 'y 8
+                  (eproc/extend-env 'x 7
+                    (eproc/extend-env 'y 14
+                      (eproc/empty-env)))))]
+      (is= (eproc/apply-env env 'd) 6)
+      (is= (eproc/apply-env env 'y) 8)
+      (is= (eproc/apply-env env 'x) 7))))
