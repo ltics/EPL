@@ -1,4 +1,4 @@
-(ns epl.data_abstraction.numeral_abstraction
+(ns epl.data-abstraction.numeral-abstraction
   (:require [epl.cota :refer :all]))
 
 ;; Unary Representation
