@@ -1,9 +1,9 @@
 (ns epl.data-abstraction-test
   (:require [clojure.test :refer :all]
             [epl.test_cota :refer :all]
-            [epl.data-abstraction :refer :all]))
+            [epl.data_abstraction.numeral_abstraction :refer :all]))
 
-(deftest data-abstraction
+(deftest numeral-abstraction
   (testing "unary number"
     (is= (normal-int->unary-int 3) '(true true true))
     (is= (unary-int->normal-int '(true true true)) 3)
