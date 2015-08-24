@@ -12,17 +12,16 @@
 
 (def identifier? symbol?)
 
+(def vector-ref nth)
+(def vector-length count)
+
 (def null? (fn [x]
              (if (seq? x)
                (empty? x)
                (nil? x))))
 
-(defmacro lambda
-  [& sigs]
-  `(fn ~@sigs))
-
-(def vector-ref nth)
-(def vector-length count)
+(defmacro lambda [args & body]
+  `(fn ~(vec args) ~@body))
 
 (defmacro is= [& body]
   `(is (= ~@body)))

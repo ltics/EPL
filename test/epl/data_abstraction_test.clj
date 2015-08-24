@@ -3,7 +3,8 @@
             [epl.cota :refer :all]
             [epl.data-abstraction.numeral-abstraction :refer :all]
             [epl.data-abstraction.env-abstraction.datastructure :as eds]
-            [epl.data-abstraction.env-abstraction.procedural :as eproc]))
+            [epl.data-abstraction.env-abstraction.procedural :as eproc]
+            [epl.data-abstraction.recursive-data-abstraction.interfaces :as ri]))
 
 (deftest numeral-abstraction
   (testing "unary number"
@@ -42,3 +43,8 @@
       (is= (eproc/apply-env env 'd) 6)
       (is= (eproc/apply-env env 'y) 8)
       (is= (eproc/apply-env env 'x) 7))))
+
+(deftest recursive-data-abstraction
+  (testing "interfaces"
+    (is (false? (ri/occurs-free? 'a (ri/lambda-exp 'a (ri/app-exp (ri/var-exp 'b) (ri/var-exp 'a))))))
+    (is (true? (ri/occurs-free? 'b (ri/lambda-exp 'a (ri/app-exp (ri/var-exp 'b) (ri/var-exp 'a))))))))

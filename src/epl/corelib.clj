@@ -6,10 +6,11 @@
      (= (:type ~'variant) '~type-name)))
 
 (defmacro data-type-variant [variant type-name]
-  (let [variant-name (first variant)
-        variant-spec (rest variant)
-        variant-field-names (map first variant-spec)
-        variant-args (mapcat #(reverse (take (if (= (second %1) '&) 2 1) %1)) variant-spec)
+  (let [variant-name (car variant)
+        variant-spec (cdr variant)
+        variant-field-names (map car variant-spec)
+        ;;对于只有一个元素的列表来进行reverse其实和没有reverse是一样的
+        variant-args (mapcat #(reverse (take (if (= (cadr %1) '&) 2 1) %1)) variant-spec)
         variant-field-predicates (map last variant-spec)]
     (prn variant-name)
     (prn variant-spec)
@@ -24,6 +25,7 @@
          {:pre [~@(map list variant-field-predicates variant-field-names)]}
          {:type '~type-name
           :variant '~variant-name
+          ;;使用array-map是用来保证顺序
           :values (array-map
                     ~@(mapcat #(list (keyword %1) %1) variant-field-names))}))))
 
@@ -35,17 +37,19 @@
 (defmacro cases [type-name expression & clauses]
   (let [variant (gensym)]
     `(let [~variant ~expression]
-       (if (not (= (:type ~variant) '~type-name))
+       ;;因为在data-type-variant这个宏中已经为每一个variant-name生成了一个类似构造函数的东西
+       (if (not= (:type ~variant) '~type-name)
          (throw (Exception. (str "invalid type expected " '~type-name " found '" (:type ~variant) "'"))))
        (cond ~@(mapcat (fn [clause]
-                         (let [variant-name (first clause)]
+                         (let [variant-name (car clause)]
                            (if (= variant-name 'else)
-                             `(:else ~@(rest clause))
+                             `(:else ~@(cdr clause))
                              (let [[_ field-names & consequent] clause]
                                `((= (:variant ~variant) '~variant-name)
                                   (apply
                                     (fn [~@field-names]
                                       ~@consequent)
+                                    ;;这些值是在定义表达式的时候就求值好了的
                                     (vals (:values ~variant))))))))
                        clauses)))))
 
@@ -73,7 +77,7 @@
     (cases lc-exp exp
       (var-exp (var) (= var search-var))
       (lambda-exp (bound-var body)
-                  (and (not (= search-var bound-var))
+                  (and (not= search-var bound-var)
                        (occurs-free? search-var body)))
       (app-exp (rator rand)
                (or (occurs-free? search-var rator)

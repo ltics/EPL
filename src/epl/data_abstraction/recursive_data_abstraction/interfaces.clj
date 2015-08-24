@@ -1,4 +1,4 @@
-(ns epl.data-abstraction.recursive-data-abstraction
+(ns epl.data-abstraction.recursive-data-abstraction.interfaces
   (:require [epl.cota :refer :all]))
 
 ;; Lc-exp ::= Identifier
@@ -8,32 +8,32 @@
 ;; var-exp : Var -> Lc-exp
 (def var-exp
   (lambda [var]
-    '(var-exp var)))
+    `(~'var-exp ~var)))
 
 ;; lambda-exp : Var * Lc-exp -> Lc-exp
 (def lambda-exp
   (lambda [var lc-exp]
-    '(lambda-exp var lc-exp)))
+    `(~'lambda-exp ~var ~lc-exp)))
 
 ;; app-exp : Lc-exp * Lc-exp -> Lc-exp
 (def app-exp
   (lambda [lc-exp1 lc-exp2]
-    '(app-exp lc-exp1 lc-exp2)))
+    `(~'app-exp ~lc-exp1 ~lc-exp2)))
 
 ;; var-exp? : Lc-exp -> Bool
 (def var-exp?
   (lambda [x]
-    (and (list? x) (= (car x) 'var-exp))))
+    (and (seq? x) (= (car x) 'var-exp))))
 
 ;; lambda-exp? : Lc-exp -> Bool
 (def lambda-exp?
   (lambda [x]
-    (and (list? x) (= (car x) 'lambda-exp))))
+    (and (seq? x) (= (car x) 'lambda-exp))))
 
 ;; app-exp? : Lc-exp -> Bool
 (def app-exp?
   (lambda [x]
-    (and (list? x) (= (car x) 'app-exp))))
+    (and (seq? x) (= (car x) 'app-exp))))
 
 ;; var-exp->var : Lc-exp -> Var
 (def var-exp->var
@@ -67,6 +67,7 @@
           (lambda-exp? exp) (and
                               (not (= search-var (lambda-exp->bound-var exp)))
                               (occurs-free? search-var (lambda-exp->body exp)))
-          :else (or
-                  (occurs-free? search-var (app-exp->rator exp))
-                  (occurs-free? search-var (app-exp->rand exp))))))
+          (app-exp? exp) (or
+                           (occurs-free? search-var (app-exp->rator exp))
+                           (occurs-free? search-var (app-exp->rand exp)))
+          :else (throw (Exception. "unknown expression type")))))
