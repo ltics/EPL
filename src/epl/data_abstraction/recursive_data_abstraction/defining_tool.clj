@@ -30,18 +30,18 @@
     (isnot (occurs-free? 'x (var-exp 'y)))
     (isnot (occurs-free? 'x
              (lambda-exp 'x
-                         (app-exp (var-exp 'x) (var-exp 'y)))))
+               (app-exp (var-exp 'x) (var-exp 'y)))))
     (is (occurs-free? 'x
           (lambda-exp 'y
-                      (app-exp (var-exp 'x) (var-exp 'y)))))
+            (app-exp (var-exp 'x) (var-exp 'y)))))
     (is (occurs-free? 'x
           (app-exp
             (lambda-exp 'x (var-exp 'x))
             (app-exp (var-exp 'x) (var-exp 'y)))))
     (is (occurs-free? 'x
           (lambda-exp 'y
-                      (lambda-exp 'z
-                                  (app-exp (var-exp 'x)
-                                           (app-exp (var-exp 'y) (var-exp 'z)))))))))
+            (lambda-exp 'z
+              (app-exp (var-exp 'x)
+                (app-exp (var-exp 'y) (var-exp 'z)))))))))
 
 (run-tests)
