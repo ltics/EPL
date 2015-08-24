@@ -17,7 +17,8 @@
          (and (= (get data# :type) '~type-name)
               (= (get data# :variant) '~variant-name)))
        (defn ~variant-name [~@variant-args]
-         {:pre [~@(map list variant-field-predicates variant-field-names)]}
+         ;;对交叉引用的predicate会有点麻烦 比如s-list? s-exp?这样相互引用的 所以先将precheck去掉了 反正貌似:pre也没用到
+         ;;{:pre [~@(map list variant-field-predicates variant-field-names)]}
          {:type '~type-name
           :variant '~variant-name
           ;;使用array-map是用来保证顺序
