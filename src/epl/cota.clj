@@ -26,6 +26,9 @@
 (defmacro is= [& body]
   `(is (= ~@body)))
 
+(defmacro isnot [& body]
+  `(is (not ~@body)))
+
 (defmacro define-datatype-naive
   [type & body]
   (let [constructors (map (comp keyword car) body)

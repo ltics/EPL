@@ -47,4 +47,10 @@
 (deftest recursive-data-abstraction
   (testing "interfaces"
     (is (false? (ri/occurs-free? 'a (ri/lambda-exp 'a (ri/app-exp (ri/var-exp 'b) (ri/var-exp 'a))))))
-    (is (true? (ri/occurs-free? 'b (ri/lambda-exp 'a (ri/app-exp (ri/var-exp 'b) (ri/var-exp 'a))))))))
+    (is (true? (ri/occurs-free? 'b (ri/lambda-exp 'a (ri/app-exp (ri/var-exp 'b) (ri/var-exp 'a))))))
+    (is (ri/occurs-free? 'x (ri/var-exp 'x)))
+    (isnot (ri/occurs-free? 'x (ri/var-exp 'y)))
+    (isnot (ri/occurs-free? 'x (ri/lambda-exp 'x (ri/app-exp (ri/var-exp 'x) (ri/var-exp 'y)))))
+    (is (ri/occurs-free? 'x (ri/lambda-exp 'y (ri/app-exp (ri/var-exp 'x) (ri/var-exp 'y)))))
+    (is (ri/occurs-free? 'x (ri/app-exp (ri/lambda-exp 'x (ri/var-exp 'x)) (ri/app-exp (ri/var-exp 'x) (ri/var-exp 'y)))))
+    (is (ri/occurs-free? 'x (ri/lambda-exp 'y (ri/lambda-exp 'z (ri/app-exp (ri/var-exp 'x) (ri/app-exp (ri/var-exp 'y) (ri/var-exp 'z)))))))))
