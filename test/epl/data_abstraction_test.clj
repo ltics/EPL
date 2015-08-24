@@ -4,7 +4,8 @@
             [epl.data-abstraction.numeral-abstraction :refer :all]
             [epl.data-abstraction.env-abstraction.datastructure :as eds]
             [epl.data-abstraction.env-abstraction.procedural :as eproc]
-            [epl.data-abstraction.recursive-data-abstraction.interfaces :as ri]))
+            [epl.data-abstraction.recursive-data-abstraction.interfaces :as ri]
+            [epl.data-abstraction.recursive-data-abstraction.defining-tool :as dt]))
 
 (deftest numeral-abstraction
   (testing "unary number"

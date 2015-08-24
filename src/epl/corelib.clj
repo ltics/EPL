@@ -12,11 +12,6 @@
         ;;对于只有一个元素的列表来进行reverse其实和没有reverse是一样的
         variant-args (mapcat #(reverse (take (if (= (cadr %1) '&) 2 1) %1)) variant-spec)
         variant-field-predicates (map last variant-spec)]
-    (prn variant-name)
-    (prn variant-spec)
-    (prn variant-field-names)
-    (prn variant-args)
-    (prn variant-field-predicates)
     `(do
        (defn ~(symbol (str variant-name "?")) [data#]
          (and (= (get data# :type) '~type-name)
@@ -55,33 +50,3 @@
 
 (defn data-value [data field-name]
   (get (get data :values) field-name))
-
-(define-datatype env env?
-  (empty-env)
-  (non-empty-env
-    (var symbol?)
-    (val (fn [x] true?))
-    (saved-env env?)))
-
-(define-datatype lc-exp lc-exp?
-  (var-exp (var identifier?))
-  (lambda-exp
-    (bound-var identifier?)
-    (body lc-exp?))
-  (app-exp
-    (rator lc-exp?)
-    (rand lc-exp?)))
-
-(def occurs-free?
-  (lambda [search-var exp]
-    (cases lc-exp exp
-      (var-exp (var) (= var search-var))
-      (lambda-exp (bound-var body)
-                  (and (not= search-var bound-var)
-                       (occurs-free? search-var body)))
-      (app-exp (rator rand)
-               (or (occurs-free? search-var rator)
-                   (occurs-free? search-var rand))))))
-
-(occurs-free? 'x (var-exp 'x))
-(occurs-free? 'x (lambda-exp 'y (app-exp (var-exp 'x) (var-exp 'y))))
