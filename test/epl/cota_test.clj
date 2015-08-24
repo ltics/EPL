@@ -1,11 +1,10 @@
 (ns epl.cota-test
   (:require [clojure.test :refer :all]
-            [epl.test_cota :refer :all]
             [epl.cota :refer :all]))
 
 (deftest test-cota
   (testing "define-datatype"
-    (do (define-datatype lc-exp
+    (do (define-datatype-naive lc-exp
           (var-exp var)
           (lambda-exp bound-var body)
           (app-exp rator rand))

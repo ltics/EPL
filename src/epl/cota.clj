@@ -1,4 +1,5 @@
-(ns epl.cota)
+(ns epl.cota
+  (:require [clojure.test :refer :all]))
 
 (def car first)
 (def cdr rest)
@@ -8,6 +9,8 @@
 (def caddr #(car (cdr (cdr %))))
 (def cdadr #(cdr (cadr %)))
 (def cadddr #(car (cdr (cddr %))))
+
+(def identifier? symbol?)
 
 (def null? (fn [x]
              (if (seq? x)
@@ -21,7 +24,10 @@
 (def vector-ref nth)
 (def vector-length count)
 
-(defmacro define-datatype
+(defmacro is= [& body]
+  `(is (= ~@body)))
+
+(defmacro define-datatype-naive
   [type & body]
   (let [constructors (map (comp keyword car) body)
         fields (map (fn [inner-fields]

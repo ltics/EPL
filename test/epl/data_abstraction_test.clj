@@ -1,6 +1,6 @@
 (ns epl.data-abstraction-test
   (:require [clojure.test :refer :all]
-            [epl.test_cota :refer :all]
+            [epl.cota :refer :all]
             [epl.data-abstraction.numeral-abstraction :refer :all]
             [epl.data-abstraction.env-abstraction.datastructure :as eds]
             [epl.data-abstraction.env-abstraction.procedural :as eproc]))
