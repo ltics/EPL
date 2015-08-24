@@ -27,8 +27,8 @@
                (or (occurs-free? search-var rator)
                    (occurs-free? search-var rand))))))
 
-;; S-list ::=({S-exp}∗)
-;; S-exp::=Symbol | S-list
+;; S-list ::= ({S-exp}∗)
+;; S-exp ::= Symbol | S-list
 
 (declare s-exp?)
 
@@ -51,6 +51,8 @@
     (key symbol?)
     (left bintree?)
     (right bintree?)))
+
+;; Bintree ::= () | (Int Bintree Bintree)
 
 (defn bintree-to-list
   [bt]
